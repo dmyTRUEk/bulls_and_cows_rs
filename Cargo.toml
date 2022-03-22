@@ -1,0 +1,20 @@
+[package]
+edition = "2021"
+name = "bulls_and_cows"
+version = "0.0.1"
+
+[dependencies]
+itertools = "*"
+rand = "*"
+
+[profile.release]
+lto = true
+#target-cpu = "native"
+codegen-units = 1
+opt-level = 3
+panic = "abort"
+#debuginfo = 0
+
+[features]
+default = []
+is_bench = []
