@@ -233,8 +233,8 @@ fn generate_number_to_guess(guesses: &Guesses) -> Option<Number> {
     // TODO: maybe optimize here:
     match guesses.len() {
         0 => {
-            // Some(generate_number_random(vec![]))
-            Some(Number::from("0123"))
+            Some(generate_number_random(vec![]))
+            // Some(Number::from("0123"))
         }
         // 1 => {
         //     let (a, b, c, d) = guesses[0].get_number().to_tuple();
