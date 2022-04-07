@@ -158,6 +158,19 @@ where T: Copy + std::cmp::PartialEq
 
 
 
+trait Average<T> {
+    fn avg(self) -> T;
+}
+
+impl<const N: usize> Average<f64> for [u8; N] {
+    fn avg(self) -> f64 {
+        let sum: i64 = self.iter().map(|&n: &u8| n as i64).sum::<i64>();
+        sum as f64 / self.len() as f64
+    }
+}
+
+
+
 type Guesses = Vec<Guess>;
 
 
@@ -206,6 +219,7 @@ fn generate_number_smart(guesses: &Guesses) -> Option<Number> {
     if !currently_legal_numbers.is_empty() {
         // TODO: maybe optimize here:
         Some(currently_legal_numbers[random(0, currently_legal_numbers.len())])
+        // Some(currently_legal_numbers[0])
     }
     else {
         None
@@ -317,8 +331,10 @@ fn main() {
     }
     else {
         let ns: [u8; 5040] = bench();
-        let avg: f64 = ns.into_iter().map(|n: u8| n as u64).sum::<u64>() as f64 / ns.len() as f64;
+        let avg: f64 = ns.avg();
+        let avg2: f64 = ns.into_iter().map(|n: u8| n as f64).map(|n: f64| (avg-n).abs()).sum::<f64>() / ns.len() as f64;
         println!("avg = {avg}");
+        println!("avg2 = {avg2}");
     }
 }
 
